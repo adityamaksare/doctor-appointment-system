@@ -45,6 +45,10 @@ const doctorSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a bio']
   },
+  profileImage: {
+    type: String,
+    default: null // Will store the image filename
+  },
   rating: {
     type: Number,
     default: 0

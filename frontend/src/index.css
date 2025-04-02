@@ -1,6 +1,7 @@
 /* Import typography styles */
 @import './styles/typography.css';
 @import './styles/forms.css';
+@import './styles/DoctorCard.css';
 
 body {
   margin: 0;
