@@ -1,0 +1,350 @@
+:root {
+  /* Color Palette */
+  --primary-blue: #2A9DF4;
+  --dark-blue: #054A91;
+  --soft-green: #28C76F;
+  --calm-teal: #20B2AA;
+  --dark-gray: #333333;
+  --medium-gray: #666666;
+  --light-gray: #F5F5F5;
+  --lighter-gray: #E0E0E0;
+  --white: #FFFFFF;
+  --error-red: #FF4C4C;
+  --footer-gray: #222831;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  background-color: var(--white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Navbar Styling */
+header .navbar {
+  background-color: var(--dark-blue) !important;
+  padding: 15px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .navbar-brand {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--white) !important;
+}
+
+header .nav-link {
+  color: var(--white) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: transform 0.2s;
+}
+
+header .nav-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+header .dropdown-menu {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+header .dropdown-item:hover {
+  background-color: var(--light-gray);
+}
+
+/* Footer Styling */
+footer {
+  background-color: var(--footer-gray);
+  color: var(--white);
+  padding: 25px 0;
+  margin-top: auto;
+}
+
+footer a {
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+/* Button Styling */
+.btn-primary {
+  background-color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 8px 18px;
+  transition: all 0.3s;
+  box-shadow: 0 2px 6px rgba(42, 157, 244, 0.2);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: var(--dark-blue) !important;
+  border-color: var(--dark-blue) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(5, 74, 145, 0.3);
+}
+
+.btn-success {
+  background-color: var(--soft-green) !important;
+  border-color: var(--soft-green) !important;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active {
+  background-color: #23a85e !important;
+  border-color: #23a85e !important;
+}
+
+.btn-outline-primary {
+  color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-blue) !important;
+  color: var(--white) !important;
+}
+
+/* Card Styling */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: var(--dark-blue);
+  font-weight: 600;
+}
+
+.card-header {
+  background-color: rgba(42, 157, 244, 0.1);
+  border-bottom: 1px solid rgba(42, 157, 244, 0.2);
+  font-weight: 600;
+}
+
+/* Form Styling */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-control {
+  border: 1px solid var(--lighter-gray);
+  border-radius: 8px;
+  padding: 12px 15px;
+  transition: all 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 0.25rem rgba(42, 157, 244, 0.25);
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+/* Badge Styling */
+.badge {
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.badge-warning, .bg-warning {
+  background-color: #FFC107 !important;
+  color: #664d03 !important;
+}
+
+.badge-success, .bg-success {
+  background-color: var(--soft-green) !important;
+}
+
+.badge-danger, .bg-danger {
+  background-color: var(--error-red) !important;
+}
+
+/* Doctor Card Styling */
+.doctor-card {
+  transition: transform 0.3s;
+}
+
+.doctor-card:hover {
+  transform: translateY(-8px);
+}
+
+.doctor-card .doctor-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-blue);
+}
+
+/* Appointment Items */
+.appointment-item {
+  border-left: 4px solid var(--primary-blue);
+  padding-left: 15px;
+}
+
+.appointment-item.pending {
+  border-left-color: #FFC107;
+}
+
+.appointment-item.confirmed {
+  border-left-color: var(--soft-green);
+}
+
+.appointment-item.cancelled {
+  border-left-color: var(--error-red);
+}
+
+/* Alert/Message Styling */
+.alert-success {
+  background-color: rgba(40, 199, 111, 0.1);
+  border-color: rgba(40, 199, 111, 0.3);
+  color: #146c43;
+}
+
+.alert-danger {
+  background-color: rgba(255, 76, 76, 0.1);
+  border-color: rgba(255, 76, 76, 0.3);
+  color: #b02a37;
+}
+
+.alert-info {
+  background-color: rgba(42, 157, 244, 0.1);
+  border-color: rgba(42, 157, 244, 0.3);
+  color: #055160;
+}
+
+/* Dashboard Cards */
+.dashboard-stat-card {
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: var(--white);
+  border-left: 4px solid var(--primary-blue);
+  transition: transform 0.3s;
+}
+
+.dashboard-stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.dashboard-stat-card .stat-icon {
+  font-size: 2rem;
+  color: var(--primary-blue);
+}
+
+.dashboard-stat-card .stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark-gray);
+}
+
+.dashboard-stat-card .stat-label {
+  color: var(--medium-gray);
+  font-weight: 500;
+}
+
+/* Loader Animation */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(42, 157, 244, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-blue);
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 20px;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+  }
+  
+  .doctor-card .doctor-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Rating Stars */
+.rating-stars {
+  color: #FFC107;
+  font-size: 1.2rem;
+}
+
+/* Doctor Profile Page */
+.doctor-profile-header {
+  background-color: rgba(5, 74, 145, 0.05);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 25px;
+}
