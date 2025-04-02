@@ -56,7 +56,6 @@ For detailed setup instructions, please refer to the [Howtorun.md](Howtorun.md) 
 
 ## Screenshots
 
-(Add screenshots of your application here)
 
 ## Contributing
 
