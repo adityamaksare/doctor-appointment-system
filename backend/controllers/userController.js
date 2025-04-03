@@ -70,8 +70,10 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
     console.log('Login attempt for:', email);
 
-    // Check for user
-    const user = await User.findOne({ email }).select('+password');
+    // Check for user with case-insensitive email matching
+    const user = await User.findOne({ 
+      email: { $regex: new RegExp(`^${email}$`, "i") } 
+    }).select('+password');
 
     if (!user) {
       console.log('User not found:', email);
