@@ -11,7 +11,7 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <AlertProvider>
-        <App />
+      <App />
       </AlertProvider>
     </AuthProvider>
   </React.StrictMode>

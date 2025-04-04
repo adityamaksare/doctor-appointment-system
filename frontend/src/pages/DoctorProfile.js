@@ -55,6 +55,12 @@ const DoctorProfile = () => {
       setLoading(true);
       const { data } = await api.get(`/doctors/${id}`);
       setDoctor(data.data);
+      
+      // Update the page title with doctor's name
+      if (data.data && data.data.user && data.data.user.name) {
+        document.title = `Dr. ${data.data.user.name} | MedConnect`;
+      }
+      
       setLoading(false);
     } catch (err) {
       setError(
@@ -199,10 +205,10 @@ const DoctorProfile = () => {
       
       // Close modal and redirect after a short delay to show success message
       setTimeout(() => {
-        setBookingLoading(false);
-        setShowModal(false);
+      setBookingLoading(false);
+      setShowModal(false);
         success(`Appointment booked successfully with Dr. ${doctor.user.name}`);
-        navigate('/appointments');
+      navigate('/appointments');
       }, 1500);
       
     } catch (err) {

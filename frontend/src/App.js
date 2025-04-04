@@ -16,12 +16,14 @@ import UserProfile from './pages/UserProfile';
 import DoctorDashboard from './pages/DoctorDashboard';
 import PatientDashboard from './pages/PatientDashboard';
 import HelpAndSupport from './pages/HelpAndSupport';
+import PageTitleUpdater from './components/PageTitleUpdater';
 import './App.css';
 
 function App() {
   return (
     <Router>
       <div className="app">
+        <PageTitleUpdater />
         <Header />
         <AlertToast />
         <main className="container py-4">

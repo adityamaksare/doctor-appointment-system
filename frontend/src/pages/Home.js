@@ -2,10 +2,32 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Card, Button, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaUserMd, FaCalendarAlt, FaUserPlus, FaChartLine, FaHospital, FaStethoscope, FaUserNurse, FaTooth, FaBone, FaBrain, FaEye, FaHeartbeat } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import api from '../utils/api';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import AnimatedHeadline from '../components/AnimatedHeadline';
 import { AuthContext } from '../context/AuthContext';
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
 
 const Home = () => {
   const [topDoctors, setTopDoctors] = useState([]);
@@ -14,6 +36,9 @@ const Home = () => {
   const { userInfo } = useContext(AuthContext);
 
   useEffect(() => {
+    // Set home page title
+    document.title = 'MedConnect | Your Health, Our Priority';
+    
     const fetchTopDoctors = async () => {
       try {
         setLoading(true);
@@ -66,20 +91,36 @@ const Home = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="hero py-5" style={{ 
-        background: 'linear-gradient(135deg, #0a6cb9 0%, #4F9DF9 100%)',
-        borderRadius: '20px',
-        margin: '20px 0',
-        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)'
-      }}>
+      <motion.section 
+        className="hero py-5" 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        style={{ 
+          background: 'linear-gradient(135deg, #0a6cb9 0%, #4F9DF9 100%)',
+          borderRadius: '20px',
+          margin: '20px 0',
+          boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)'
+        }}
+      >
         <Container>
           <Row className="align-items-center">
             <Col lg={6} className="text-white mb-5 mb-lg-0">
-              <h1 className="display-4 fw-bold mb-3">Your Health, Our Priority</h1>
-              <p className="lead mb-4 text-white">
+              <AnimatedHeadline />
+              <motion.p 
+                className="lead mb-4 text-white"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+              >
                 Find the right doctor, book an appointment, and get the care you deserve. MedConnect makes healthcare accessible and convenient.
-              </p>
-              <div className="d-flex flex-wrap gap-3">
+              </motion.p>
+              <motion.div 
+                className="d-flex flex-wrap gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+              >
                 <Button as={Link} to="/doctors" size="lg" variant="light" className="fw-bold">
                   Find Doctors
                 </Button>
@@ -88,150 +129,171 @@ const Home = () => {
                     Sign Up Now
                   </Button>
                 )}
-              </div>
+              </motion.div>
             </Col>
             <Col lg={6}>
-              <img 
+              <motion.img 
                 src="https://img.freepik.com/free-vector/doctors-concept-illustration_114360-1515.jpg" 
                 alt="Healthcare Professionals" 
                 className="img-fluid shadow-lg"
+                initial={{ opacity: 0, rotateY: -15, scale: 0.95 }}
+                animate={{ opacity: 1, rotateY: -5, scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                whileHover={{ rotateY: 0, scale: 1.02 }}
                 style={{ 
                   maxHeight: '400px',
                   borderRadius: '15px',
-                  transform: 'perspective(1000px) rotateY(-5deg)',
                   transition: 'transform 0.5s ease'
                 }}
               />
             </Col>
           </Row>
         </Container>
-      </section>
+      </motion.section>
 
       {/* Features Section */}
       <section className="py-5">
         <Container>
-          <h2 className="text-center mb-5 fw-bold">Why Choose MedConnect</h2>
-          <Row>
-            <Col lg={3} md={6} className="mb-4">
-              <Card className="h-100 text-center py-4 border-0 shadow-sm">
-                <div className="text-center mb-3">
-                  <span style={{ fontSize: '3rem', color: 'var(--primary-blue)' }}>
-                    <FaUserMd />
-                  </span>
-                </div>
-                <Card.Body>
-                  <Card.Title className="fw-bold">Expert Doctors</Card.Title>
-                  <Card.Text>
-                    Access to a network of qualified and experienced healthcare professionals.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col lg={3} md={6} className="mb-4">
-              <Card className="h-100 text-center py-4 border-0 shadow-sm">
-                <div className="text-center mb-3">
-                  <span style={{ fontSize: '3rem', color: 'var(--primary-blue)' }}>
-                    <FaCalendarAlt />
-                  </span>
-                </div>
-                <Card.Body>
-                  <Card.Title className="fw-bold">Easy Scheduling</Card.Title>
-                  <Card.Text>
-                    Book appointments online 24/7 with just a few clicks, no phone calls needed.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col lg={3} md={6} className="mb-4">
-              <Card className="h-100 text-center py-4 border-0 shadow-sm">
-                <div className="text-center mb-3">
-                  <span style={{ fontSize: '3rem', color: 'var(--primary-blue)' }}>
-                    <FaUserPlus />
-                  </span>
-                </div>
-                <Card.Body>
-                  <Card.Title className="fw-bold">Patient Profiles</Card.Title>
-                  <Card.Text>
-                    Manage your health information and appointment history in one place.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col lg={3} md={6} className="mb-4">
-              <Card className="h-100 text-center py-4 border-0 shadow-sm">
-                <div className="text-center mb-3">
-                  <span style={{ fontSize: '3rem', color: 'var(--primary-blue)' }}>
-                    <FaChartLine />
-                  </span>
-                </div>
-                <Card.Body>
-                  <Card.Title className="fw-bold">Health Tracking</Card.Title>
-                  <Card.Text>
-                    Keep track of your appointments and health records over time.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+          <motion.h2 
+            className="text-center mb-5 fw-bold"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+          >
+            Why Choose MedConnect
+          </motion.h2>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            <Row>
+              {[
+                { title: 'Expert Doctors', icon: <FaUserMd />, text: 'Access to a network of qualified and experienced healthcare professionals.' },
+                { title: 'Easy Scheduling', icon: <FaCalendarAlt />, text: 'Book appointments online 24/7 with just a few clicks, no phone calls needed.' },
+                { title: 'Patient Profiles', icon: <FaUserPlus />, text: 'Manage your health information and appointment history in one place.' },
+                { title: 'Health Tracking', icon: <FaChartLine />, text: 'Keep track of your appointments and health records over time.' }
+              ].map((feature, index) => (
+                <Col lg={3} md={6} className="mb-4" key={index}>
+                  <motion.div
+                    variants={fadeInUp}
+                    whileHover={{ y: -10, transition: { duration: 0.2 } }}
+                  >
+                    <Card className="h-100 text-center py-4 border-0 shadow-sm">
+                      <div className="text-center mb-3">
+                        <motion.span 
+                          style={{ fontSize: '3rem', color: 'var(--primary-blue)' }}
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          {feature.icon}
+                        </motion.span>
+                      </div>
+                      <Card.Body>
+                        <Card.Title className="fw-bold">{feature.title}</Card.Title>
+                        <Card.Text>
+                          {feature.text}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </motion.div>
+                </Col>
+              ))}
+            </Row>
+          </motion.div>
         </Container>
       </section>
 
       {/* Featured Doctors Section */}
       <section className="py-5 bg-light">
         <Container>
-          <h2 className="text-center mb-5 fw-bold">Top Doctors</h2>
+          <motion.h2 
+            className="text-center mb-5 fw-bold"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+          >
+            Top Doctors
+          </motion.h2>
           
           {loading ? (
             <Loader />
           ) : error ? (
             <Message>{error}</Message>
           ) : (
-            <Row>
-              {topDoctors.slice(0, 4).map(doctor => (
-                <Col key={doctor._id} lg={3} md={6} className="mb-4">
-                  <Card className="doctor-card h-100 border-0 shadow-sm">
-                    <div className="text-center pt-4">
-                      <img
-                        src={`https://ui-avatars.com/api/?name=${doctor.user.name}&background=random&size=150`}
-                        alt={doctor.user.name}
-                        className="rounded-circle mb-3 border"
-                        width="100"
-                        height="100"
-                      />
-                    </div>
-                    <Card.Body className="text-center">
-                      <Card.Title className="fw-bold">{doctor.user.name}</Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">{doctor.specialization}</Card.Subtitle>
-                      <div className="mb-2">
-                        <small className="text-warning">
-                          {'★'.repeat(Math.floor(doctor.rating))}
-                          {'☆'.repeat(5 - Math.floor(doctor.rating))}
-                          <span className="ms-1 text-muted">({doctor.reviewCount} reviews)</span>
-                        </small>
-                      </div>
-                      <Card.Text>
-                        <small className="text-muted">{doctor.experience} years of experience</small>
-                      </Card.Text>
-                      <Button 
-                        as={Link} 
-                        to={`/doctors/${doctor._id}`} 
-                        variant="outline-primary" 
-                        size="sm"
-                      >
-                        View Profile
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <Row>
+                {topDoctors.slice(0, 4).map((doctor, index) => (
+                  <Col key={doctor._id} lg={3} md={6} className="mb-4">
+                    <motion.div
+                      variants={fadeInUp}
+                      whileHover={{ y: -10, transition: { duration: 0.2 } }}
+                    >
+                      <Card className="doctor-card h-100 border-0 shadow-sm">
+                        <div className="text-center pt-4">
+                          <motion.img
+                            src={`https://ui-avatars.com/api/?name=${doctor.user.name}&background=random&size=150`}
+                            alt={doctor.user.name}
+                            className="rounded-circle mb-3 border"
+                            width="100"
+                            height="100"
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                          />
+                        </div>
+                        <Card.Body className="text-center">
+                          <Card.Title className="fw-bold">{doctor.user.name}</Card.Title>
+                          <Card.Subtitle className="mb-2 text-muted">{doctor.specialization}</Card.Subtitle>
+                          <div className="mb-2">
+                            <small className="text-warning">
+                              {'★'.repeat(Math.floor(doctor.rating))}
+                              {'☆'.repeat(5 - Math.floor(doctor.rating))}
+                              <span className="ms-1 text-muted">({doctor.reviewCount} reviews)</span>
+                            </small>
+                          </div>
+                          <Card.Text>
+                            <small className="text-muted">{doctor.experience} years of experience</small>
+                          </Card.Text>
+                          <motion.div whileHover={{ scale: 1.05 }}>
+                            <Button 
+                              as={Link} 
+                              to={`/doctors/${doctor._id}`} 
+                              variant="outline-primary" 
+                              size="sm"
+                            >
+                              View Profile
+                            </Button>
+                          </motion.div>
+                        </Card.Body>
+                      </Card>
+                    </motion.div>
+                  </Col>
+                ))}
+              </Row>
+            </motion.div>
           )}
           
-          <div className="text-center mt-4">
-            <Button as={Link} to="/doctors" variant="primary" size="lg">
-              View All Doctors
-            </Button>
-          </div>
+          <motion.div 
+            className="text-center mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <motion.div whileHover={{ scale: 1.05 }}>
+              <Button as={Link} to="/doctors" variant="primary" size="lg">
+                View All Doctors
+              </Button>
+            </motion.div>
+          </motion.div>
         </Container>
       </section>
 

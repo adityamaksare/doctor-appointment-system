@@ -40,6 +40,15 @@ const AppointmentDetails = () => {
       }
       
       setAppointment(appointment);
+      
+      // Update page title with appointment information
+      if (appointment.doctor && appointment.doctor.user) {
+        const formattedDate = new Date(appointment.appointmentDate).toLocaleDateString();
+        document.title = `Appointment with Dr. ${appointment.doctor.user.name} on ${formattedDate} | MedConnect`;
+      } else {
+        document.title = `Appointment Details | MedConnect`;
+      }
+      
       setLoading(false);
     } catch (err) {
       console.error('Error fetching appointment details:', err);

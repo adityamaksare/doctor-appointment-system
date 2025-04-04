@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaUser, FaSignOutAlt, FaCalendarAlt, FaUserMd, FaHome, FaSearch, FaStethoscope, FaUserCircle, FaSignInAlt, FaUserPlus, FaClipboardList, FaHeadset } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../context/AuthContext';
 import { useAlerts } from '../context/AlertContext';
 
@@ -71,10 +72,28 @@ const Header = () => {
         expanded={expanded}
       >
         <Container>
-          <Navbar.Brand as={Link} to="/" className="brand-logo" onClick={closeNavbar}>
-            <FaStethoscope size={24} className="brand-icon pulse-on-hover" />
-            <span className="brand-text">MedConnect</span>
-          </Navbar.Brand>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Navbar.Brand as={Link} to="/" className="brand-logo" onClick={closeNavbar}>
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <FaStethoscope size={24} className="brand-icon" />
+              </motion.div>
+              <motion.span 
+                className="brand-text"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+              >
+                MedConnect
+              </motion.span>
+            </Navbar.Brand>
+          </motion.div>
           
           <Navbar.Toggle 
             aria-controls="basic-navbar-nav" 
@@ -84,113 +103,178 @@ const Header = () => {
           
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto nav-menu">
-              <Nav.Link 
-                as={Link} 
-                to="/" 
-                className={`nav-link-custom ${isActive('/') ? 'active' : ''}`}
-                onClick={closeNavbar}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
               >
-                <FaHome className="nav-icon" /> 
-                <span>Home</span>
-              </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/doctors" 
-                className={`nav-link-custom ${isActive('/doctors') ? 'active' : ''}`}
-                onClick={closeNavbar}
+                <Nav.Link 
+                  as={Link} 
+                  to="/" 
+                  className={`nav-link-custom ${isActive('/') ? 'active' : ''}`}
+                  onClick={closeNavbar}
+                >
+                  <FaHome className="nav-icon" /> 
+                  <span>Home</span>
+                </Nav.Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
               >
-                <FaUserMd className="nav-icon" /> 
-                <span>Doctors</span>
-              </Nav.Link>
-              <Nav.Link 
-                as={Link} 
-                to="/help-support" 
-                className={`nav-link-custom ${isActive('/help-support') ? 'active' : ''}`}
-                onClick={closeNavbar}
+                <Nav.Link 
+                  as={Link} 
+                  to="/doctors" 
+                  className={`nav-link-custom ${isActive('/doctors') ? 'active' : ''}`}
+                  onClick={closeNavbar}
+                >
+                  <FaUserMd className="nav-icon" /> 
+                  <span>Doctors</span>
+                </Nav.Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.3 }}
               >
-                <FaHeadset className="nav-icon" /> 
-                <span>Contact Us</span>
-              </Nav.Link>
+                <Nav.Link 
+                  as={Link} 
+                  to="/help-support" 
+                  className={`nav-link-custom ${isActive('/help-support') ? 'active' : ''}`}
+                  onClick={closeNavbar}
+                >
+                  <FaHeadset className="nav-icon" /> 
+                  <span>Contact Us</span>
+                </Nav.Link>
+              </motion.div>
               
               {userInfo ? (
                 <>
                   {userInfo.role === 'patient' && (
                     <>
-                      <Nav.Link 
-                        as={Link} 
-                        to="/appointments" 
-                        className={`nav-link-custom ${isActive('/appointments') ? 'active' : ''}`}
-                        onClick={closeNavbar}
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.3 }}
                       >
-                        <FaCalendarAlt className="nav-icon" /> 
-                        <span>Appointments</span>
-                      </Nav.Link>
-                      <Nav.Link 
-                        as={Link} 
-                        to="/patient-dashboard" 
-                        className={`nav-link-custom ${isActive('/patient-dashboard') ? 'active' : ''}`}
-                        onClick={closeNavbar}
+                        <Nav.Link 
+                          as={Link} 
+                          to="/appointments" 
+                          className={`nav-link-custom ${isActive('/appointments') ? 'active' : ''}`}
+                          onClick={closeNavbar}
+                        >
+                          <FaCalendarAlt className="nav-icon" /> 
+                          <span>Appointments</span>
+                        </Nav.Link>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5, duration: 0.3 }}
                       >
-                        <FaClipboardList className="nav-icon" /> 
-                        <span>Dashboard</span>
-                      </Nav.Link>
+                        <Nav.Link 
+                          as={Link} 
+                          to="/patient-dashboard" 
+                          className={`nav-link-custom ${isActive('/patient-dashboard') ? 'active' : ''}`}
+                          onClick={closeNavbar}
+                        >
+                          <FaClipboardList className="nav-icon" /> 
+                          <span>Dashboard</span>
+                        </Nav.Link>
+                      </motion.div>
                     </>
                   )}
                   
                   {userInfo.role === 'doctor' && (
                     <>
-                      <Nav.Link 
-                        as={Link} 
-                        to="/doctor-dashboard" 
-                        className={`nav-link-custom ${isActive('/doctor-dashboard') ? 'active' : ''}`}
-                        onClick={closeNavbar}
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.3 }}
                       >
-                        <FaClipboardList className="nav-icon" />
-                        <span>Dashboard</span>
-                      </Nav.Link>
+                        <Nav.Link 
+                          as={Link} 
+                          to="/doctor-dashboard" 
+                          className={`nav-link-custom ${isActive('/doctor-dashboard') ? 'active' : ''}`}
+                          onClick={closeNavbar}
+                        >
+                          <FaClipboardList className="nav-icon" />
+                          <span>Dashboard</span>
+                        </Nav.Link>
+                      </motion.div>
                     </>
                   )}
                   
-                  <NavDropdown 
-                    title={
-                      <span className="user-dropdown-toggle">
-                        <FaUser className="user-icon" />
-                        <span className="username-text">{userInfo.name.split(' ')[0]}</span>
-                      </span>
-                    } 
-                    id="basic-nav-dropdown"
-                    className="dropdown-custom"
-                    align="end"
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.3 }}
                   >
-                    <NavDropdown.Item as={Link} to="/profile" onClick={closeNavbar}>
-                      <FaUserCircle className="dropdown-icon" /> Profile
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      <FaSignOutAlt className="dropdown-icon" /> Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                    <NavDropdown 
+                      title={
+                        <motion.span 
+                          className="user-dropdown-toggle"
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          <FaUser className="user-icon" />
+                          <span className="username-text">{userInfo.name.split(' ')[0]}</span>
+                        </motion.span>
+                      } 
+                      id="basic-nav-dropdown"
+                      className="dropdown-custom"
+                      align="end"
+                    >
+                      <motion.div whileHover={{ x: 5, transition: { duration: 0.2 } }}>
+                        <NavDropdown.Item as={Link} to="/profile" onClick={closeNavbar}>
+                          <FaUserCircle className="dropdown-icon" /> Profile
+                        </NavDropdown.Item>
+                      </motion.div>
+                      <NavDropdown.Divider />
+                      <motion.div whileHover={{ x: 5, transition: { duration: 0.2 } }}>
+                        <NavDropdown.Item onClick={logoutHandler}>
+                          <FaSignOutAlt className="dropdown-icon" /> Logout
+                        </NavDropdown.Item>
+                      </motion.div>
+                    </NavDropdown>
+                  </motion.div>
                 </>
               ) : (
                 <>
-                  <Nav.Link 
-                    as={Link} 
-                    to="/login" 
-                    className={`nav-link-custom ${isActive('/login') ? 'active' : ''}`}
-                    onClick={closeNavbar}
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.3 }}
                   >
-                    <FaSignInAlt className="nav-icon" /> 
-                    <span>Login</span>
-                  </Nav.Link>
-                  <Nav.Link 
-                    as={Link} 
-                    to="/register" 
-                    className={`nav-link-custom ${isActive('/register') ? 'active' : ''}`}
-                    onClick={closeNavbar}
+                    <Nav.Link 
+                      as={Link} 
+                      to="/login" 
+                      className={`nav-link-custom ${isActive('/login') ? 'active' : ''}`}
+                      onClick={closeNavbar}
+                    >
+                      <FaSignInAlt className="nav-icon" /> 
+                      <span>Login</span>
+                    </Nav.Link>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.3 }}
                   >
-                    <FaUserPlus className="nav-icon" /> 
-                    <span>Sign Up</span>
-                  </Nav.Link>
+                    <Nav.Link 
+                      as={Link} 
+                      to="/register" 
+                      className={`nav-link-custom ${isActive('/register') ? 'active' : ''}`}
+                      onClick={closeNavbar}
+                    >
+                      <FaUserPlus className="nav-icon" /> 
+                      <span>Sign Up</span>
+                    </Nav.Link>
+                  </motion.div>
                 </>
               )}
             </Nav>

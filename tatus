@@ -1,0 +1,5 @@
+[33mcommit 6ac4831fd183108d32e17a4b07159a654f379c8f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Aditya Maksare <adityamaksare@outlook.com>
+Date:   Fri Apr 4 21:16:42 2025 +0530
+
+    Update UI with modern fonts, improve payment gateway with automatic closing, add Help and Support page, and fix AlertContext integration
