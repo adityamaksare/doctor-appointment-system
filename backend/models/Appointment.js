@@ -36,6 +36,11 @@ const appointmentSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  paymentMethod: {
+    type: String,
+    enum: ['card', 'phonepe', 'googlepay', 'cash'],
+    default: 'card'
+  },
   createdAt: {
     type: Date,
     default: Date.now

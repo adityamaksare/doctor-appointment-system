@@ -6,7 +6,7 @@ const Doctor = require('../models/Doctor');
 // @access  Private/Patient
 exports.bookAppointment = async (req, res) => {
   try {
-    const { doctorId, appointmentDate, appointmentTime, reason } = req.body;
+    const { doctorId, appointmentDate, appointmentTime, reason, paymentMethod, isPaid } = req.body;
 
     // Check if the doctor exists
     const doctor = await Doctor.findById(doctorId);
@@ -57,24 +57,27 @@ exports.bookAppointment = async (req, res) => {
       });
     }
 
-    // Create new appointment
+    // Create appointment with payment info
     const appointment = await Appointment.create({
       doctor: doctorId,
-      patient: req.user._id,
-      appointmentDate: date,
+      patient: req.user.id,
+      appointmentDate,
       appointmentTime,
       reason,
-      fees: doctor.fees
+      fees: doctor.fees,
+      isPaid: isPaid || false,
+      paymentMethod
     });
 
     res.status(201).json({
       success: true,
-      data: appointment
+      data: appointment,
+      message: 'Appointment booked successfully'
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message
+      message: 'Could not book appointment'
     });
   }
 };

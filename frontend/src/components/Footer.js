@@ -65,7 +65,7 @@ const Footer = () => {
                 <Link to="#" className="text-decoration-none">Medical Records</Link>
               </li>
               <li className="mb-2">
-                <Link to="#" className="text-decoration-none">24/7 Support</Link>
+                <Link to="/help-support" className="text-decoration-none">24/7 Support</Link>
               </li>
             </ul>
           </Col>

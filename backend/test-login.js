@@ -23,7 +23,7 @@ const testLogin = async () => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     
     // Email and password to test
-    const testEmail = 'aditya@gmail.com';
+    const testEmail = 'rajesh.sharma@example.com';
     const testPassword = 'password123';
     
     console.log(`Testing login for: ${testEmail} with password: ${testPassword}`);
@@ -38,7 +38,11 @@ const testLogin = async () => {
       
       // Try to find any similar emails
       const similarUsers = await User.find({
-        email: { $regex: new RegExp('aditya', 'i') }
+        $or: [
+          { email: { $regex: new RegExp('rajesh', 'i') } },
+          { name: { $regex: new RegExp('rajesh', 'i') } },
+          { name: { $regex: new RegExp('sharma', 'i') } }
+        ]
       });
       
       if (similarUsers.length > 0) {

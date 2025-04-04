@@ -67,14 +67,16 @@ const Home = () => {
     <>
       {/* Hero Section */}
       <section className="hero py-5" style={{ 
-        background: 'linear-gradient(135deg, #054A91 0%, #2A9DF4 100%)',
-        borderRadius: '0 0 20px 20px'
+        background: 'linear-gradient(135deg, #0a6cb9 0%, #4F9DF9 100%)',
+        borderRadius: '20px',
+        margin: '20px 0',
+        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.08)'
       }}>
         <Container>
           <Row className="align-items-center">
             <Col lg={6} className="text-white mb-5 mb-lg-0">
               <h1 className="display-4 fw-bold mb-3">Your Health, Our Priority</h1>
-              <p className="lead mb-4">
+              <p className="lead mb-4 text-white">
                 Find the right doctor, book an appointment, and get the care you deserve. MedConnect makes healthcare accessible and convenient.
               </p>
               <div className="d-flex flex-wrap gap-3">
@@ -91,9 +93,14 @@ const Home = () => {
             <Col lg={6}>
               <img 
                 src="https://img.freepik.com/free-vector/doctors-concept-illustration_114360-1515.jpg" 
-                alt="Healthcare Professional" 
-                className="img-fluid rounded shadow-lg"
-                style={{ maxHeight: '400px' }}
+                alt="Healthcare Professionals" 
+                className="img-fluid shadow-lg"
+                style={{ 
+                  maxHeight: '400px',
+                  borderRadius: '15px',
+                  transform: 'perspective(1000px) rotateY(-5deg)',
+                  transition: 'transform 0.5s ease'
+                }}
               />
             </Col>
           </Row>
@@ -264,55 +271,46 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-5 bg-light">
+      <section className="py-5" style={{ 
+        background: '#ffffff',
+        borderRadius: '20px',
+        margin: '20px 0',
+        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.05)',
+        border: '1px solid #E6EBF5'
+      }}>
         <Container>
-          <h2 className="text-center mb-5 fw-bold">What Our Users Say</h2>
-          <Carousel 
-            variant="dark" 
-            controls={true} 
-            indicators={true}
+          <h2 className="text-center mb-5 fw-bold text-primary">What Our Users Say</h2>
+          <Carousel
+            indicators={false}
+            controls={true}
             interval={5000}
+            pause="hover"
             className="testimonial-carousel"
           >
             {testimonials.map((testimonial, index) => (
               <Carousel.Item key={index}>
-                <div className="text-center px-5 py-4">
+                <div className="text-center">
                   <img
                     src={testimonial.image}
                     alt={testimonial.name}
-                    className="rounded-circle mb-4"
+                    className="rounded-circle mb-4 border testimonial-image"
+                    style={{ 
+                      borderColor: '#4F9DF9',
+                      borderWidth: '3px',
+                      boxShadow: '0 5px 15px rgba(79, 157, 249, 0.2)'
+                    }}
                     width="100"
                     height="100"
                   />
-                  <h5 className="mb-1 fw-bold">{testimonial.name}</h5>
+                  <h5 className="mb-1 fw-bold text-dark">{testimonial.name}</h5>
                   <p className="text-muted mb-4">{testimonial.role}</p>
-                  <p className="lead mb-0 px-md-5 mx-md-5">"{testimonial.text}"</p>
+                  <p className="testimonial-quote lead mb-0 px-md-5 mx-md-5">
+                    {testimonial.text}
+                  </p>
                 </div>
               </Carousel.Item>
             ))}
           </Carousel>
-        </Container>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-5" style={{ 
-        background: 'linear-gradient(135deg, #054A91 0%, #2A9DF4 100%)',
-        borderRadius: '20px',
-        margin: '0 1rem 2rem'
-      }}>
-        <Container className="text-center text-white py-5">
-          <h2 className="mb-4 fw-bold">Ready to Get Started?</h2>
-          <p className="lead mb-5">
-            Join thousands of patients who have already discovered the convenience of MedConnect.
-          </p>
-          {!userInfo && (
-            <Button as={Link} to="/register" size="lg" variant="light" className="fw-bold me-3">
-              Create an Account
-            </Button>
-          )}
-          <Button as={Link} to="/doctors" size="lg" variant="outline-light" className="fw-bold">
-            Find Doctors
-          </Button>
         </Container>
       </section>
     </>

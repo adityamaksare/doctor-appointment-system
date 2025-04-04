@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Form, Button, ListGroup, Badge, Tabs, Tab } from 'react-bootstrap';
 import { FaUserMd, FaCalendarAlt, FaClock, FaCheckCircle, FaTimesCircle, FaHourglass } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
+import { useAlerts } from '../context/AlertContext';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import api from '../utils/api';
@@ -10,6 +11,7 @@ import api from '../utils/api';
 const DoctorDashboard = () => {
   const navigate = useNavigate();
   const { userInfo } = useContext(AuthContext);
+  const { success } = useAlerts();
   
   const [doctorProfile, setDoctorProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -36,7 +38,6 @@ const DoctorDashboard = () => {
   
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileError, setProfileError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
@@ -110,7 +111,6 @@ const DoctorDashboard = () => {
     try {
       setProfileLoading(true);
       setProfileError('');
-      setSuccessMessage('');
       
       const profileData = {
         specialization,
@@ -124,22 +124,20 @@ const DoctorDashboard = () => {
       if (doctorProfile) {
         // Update existing profile
         await api.put(`/doctors/${doctorProfile._id}`, profileData);
-        setSuccessMessage('Doctor profile updated successfully');
+        success('Doctor profile updated successfully');
       } else {
         // Create new profile
         await api.post('/doctors', profileData);
-        setSuccessMessage('Doctor profile created successfully');
-        
-        // Fetch updated profile
-        fetchDoctorProfile();
+        success('Doctor profile created successfully');
       }
       
       setProfileLoading(false);
+      fetchDoctorProfile();
     } catch (err) {
       setProfileError(
         err.response && err.response.data.message
           ? err.response.data.message
-          : 'Error updating doctor profile'
+          : 'Error updating profile'
       );
       setProfileLoading(false);
     }
@@ -195,11 +193,17 @@ const DoctorDashboard = () => {
   const updateAppointmentStatus = async (appointmentId, newStatus) => {
     try {
       await api.put(`/appointments/${appointmentId}`, { status: newStatus });
-      // Refresh appointments after update
-      fetchAppointments();
-      setSuccessMessage(`Appointment ${newStatus} successfully`);
+      
+      // Update local state
+      setAppointments(prevAppointments => 
+        prevAppointments.map(app => 
+          app._id === appointmentId ? { ...app, status: newStatus } : app
+        )
+      );
+      
+      success(`Appointment ${newStatus === 'confirmed' ? 'confirmed' : newStatus === 'cancelled' ? 'cancelled' : 'updated'} successfully`);
     } catch (err) {
-      setProfileError('Failed to update appointment status');
+      console.error('Error updating appointment status:', err);
     }
   };
 
@@ -364,9 +368,6 @@ const DoctorDashboard = () => {
                 </Col>
                 
                 <Col md={8}>
-                  {successMessage && <Message variant="success">{successMessage}</Message>}
-                  {profileError && <Message variant="danger">{profileError}</Message>}
-                  
                   {appointmentsLoading ? (
                     <Loader />
                   ) : appointmentsError ? (
@@ -453,7 +454,6 @@ const DoctorDashboard = () => {
                   </Card.Title>
                   
                   {profileError && <Message variant="danger">{profileError}</Message>}
-                  {successMessage && <Message variant="success">{successMessage}</Message>}
                   
                   <Form onSubmit={submitProfileHandler}>
                     <Form.Group className="mb-3" controlId="specialization">

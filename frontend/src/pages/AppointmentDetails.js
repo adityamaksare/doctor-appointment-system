@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Badge, Button, Form } from 'react-bootstrap';
 import { FaCalendarAlt, FaClock, FaUser, FaUserMd, FaNotesMedical } from 'react-icons/fa';
 import { AuthContext } from '../context/AuthContext';
+import { useAlerts } from '../context/AlertContext';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import api from '../utils/api';
@@ -11,13 +12,13 @@ const AppointmentDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { userInfo } = useContext(AuthContext);
+  const { success } = useAlerts();
   
   const [appointment, setAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [updateLoading, setUpdateLoading] = useState(false);
   const [updateError, setUpdateError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
 
   const fetchAppointmentDetails = useCallback(async () => {
     try {
@@ -90,13 +91,22 @@ const AppointmentDetails = () => {
     try {
       setUpdateLoading(true);
       setUpdateError('');
-      setSuccessMessage('');
       
       await api.put(`/appointments/${id}`, { status });
       
       // Update local state
       setAppointment({ ...appointment, status });
-      setSuccessMessage(`Appointment status updated to ${status}`);
+      
+      // Show success message using alert system
+      const statusMessage = status === 'confirmed' 
+        ? 'Appointment confirmed successfully'
+        : status === 'cancelled'
+        ? 'Appointment cancelled successfully'
+        : status === 'completed'
+        ? 'Appointment marked as completed'
+        : `Appointment status updated to ${status}`;
+        
+      success(statusMessage);
       setUpdateLoading(false);
     } catch (err) {
       setUpdateError(
@@ -119,7 +129,6 @@ const AppointmentDetails = () => {
       ) : appointment ? (
         <>
           {updateError && <Message variant="danger">{updateError}</Message>}
-          {successMessage && <Message variant="success">{successMessage}</Message>}
           
           <Card className="mb-4">
             <Card.Header className="d-flex justify-content-between align-items-center">

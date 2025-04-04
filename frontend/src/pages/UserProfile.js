@@ -2,12 +2,14 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { AuthContext } from '../context/AuthContext';
+import { useAlerts } from '../context/AlertContext';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 
 const UserProfile = () => {
   const navigate = useNavigate();
   const { userInfo, updateProfile, loading, error } = useContext(AuthContext);
+  const { success } = useAlerts();
   
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -15,7 +17,6 @@ const UserProfile = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [formError, setFormError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     if (!userInfo) {
@@ -38,7 +39,6 @@ const UserProfile = () => {
     
     try {
       setFormError('');
-      setSuccessMessage('');
       
       // Only send password if it was entered
       const userData = {
@@ -49,7 +49,7 @@ const UserProfile = () => {
       };
       
       await updateProfile(userData);
-      setSuccessMessage('Profile updated successfully');
+      success('Profile updated successfully');
       
       // Clear passwords
       setPassword('');
@@ -69,7 +69,6 @@ const UserProfile = () => {
               
               {error && <Message variant="danger">{error}</Message>}
               {formError && <Message variant="danger">{formError}</Message>}
-              {successMessage && <Message variant="success">{successMessage}</Message>}
               {loading && <Loader />}
               
               <Form onSubmit={submitHandler}>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import { AuthContext } from '../context/AuthContext';
+import { useAlerts } from '../context/AlertContext';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { FaEnvelope, FaLock, FaExclamationTriangle } from 'react-icons/fa';
@@ -11,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   
   const { login, loading, error } = useContext(AuthContext);
+  const { success } = useAlerts();
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -20,6 +21,9 @@ const Login = () => {
       console.log("Attempting login with:", { email, password });
       const result = await login(email, password);
       console.log("Login successful:", result);
+      
+      // Show success alert
+      success('Login successful! Welcome back.');
       
       // Redirect based on user role
       if (result.role === 'doctor') {
@@ -49,47 +53,61 @@ const Login = () => {
       {loading && <Loader />}
       
       <form onSubmit={submitHandler}>
-        <div className="form-group">
-          <label className="form-label" htmlFor="email">
-            Email Address
-          </label>
-          <div className="input-group">
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+        <div className="form-row">
+          <div className="form-col-full">
+            <div className="form-group">
+              <label className="form-label" htmlFor="email">
+                Email Address
+              </label>
+              <div className="input-group">
+                <FaEnvelope />
+                <input
+                  type="email"
+                  id="email"
+                  className="form-control"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="form-group">
-          <label className="form-label" htmlFor="password">
-            Password
-          </label>
-          <div className="input-group">
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+        <div className="form-row">
+          <div className="form-col-full">
+            <div className="form-group">
+              <label className="form-label" htmlFor="password">
+                Password
+              </label>
+              <div className="input-group">
+                <FaLock />
+                <input
+                  type="password"
+                  id="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <button 
-          type="submit" 
-          className="auth-form-button" 
-          disabled={loading}
-        >
-          {loading ? 'Signing In...' : 'Sign In'}
-        </button>
+        <div className="form-row">
+          <div className="form-col-full">
+            <button 
+              type="submit" 
+              className="auth-form-button" 
+              disabled={loading}
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
+            </button>
+          </div>
+        </div>
       </form>
 
       <div className="auth-form-footer">

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import AlertToast from './components/AlertToast';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,6 +15,7 @@ import AppointmentDetails from './pages/AppointmentDetails';
 import UserProfile from './pages/UserProfile';
 import DoctorDashboard from './pages/DoctorDashboard';
 import PatientDashboard from './pages/PatientDashboard';
+import HelpAndSupport from './pages/HelpAndSupport';
 import './App.css';
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
     <Router>
       <div className="app">
         <Header />
+        <AlertToast />
         <main className="container py-4">
           <Routes>
             {/* Public Routes */}
@@ -29,6 +32,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/doctors" element={<DoctorList />} />
             <Route path="/doctors/:id" element={<DoctorProfile />} />
+            <Route path="/help-support" element={<HelpAndSupport />} />
             
             {/* Protected Routes - Any Authenticated User */}
             <Route path="/profile" element={

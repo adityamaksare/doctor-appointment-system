@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Button } from 'react-bootstrap';
-import { FaCalendarAlt, FaClock, FaUser, FaUserMd } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaUser, FaUserMd, FaCreditCard } from 'react-icons/fa';
 
 const AppointmentItem = ({ appointment, showPatient = false }) => {
   const formatDate = (dateString) => {
@@ -28,6 +28,21 @@ const AppointmentItem = ({ appointment, showPatient = false }) => {
         variant = 'secondary';
     }
     return <Badge bg={variant}>{status}</Badge>;
+  };
+
+  const getPaymentMethodLabel = (method) => {
+    switch (method) {
+      case 'card':
+        return 'Credit Card';
+      case 'phonepe':
+        return 'PhonePe';
+      case 'googlepay':
+        return 'Google Pay';
+      case 'cash':
+        return 'Cash';
+      default:
+        return method;
+    }
   };
 
   return (
@@ -60,9 +75,25 @@ const AppointmentItem = ({ appointment, showPatient = false }) => {
       <p className="mb-2">
         <strong>Reason:</strong> {appointment.reason}
       </p>
-      <p className="mb-3">
-        <strong>Fee:</strong> ₹{appointment.fees} {appointment.isPaid && <Badge bg="success">Paid</Badge>}
-      </p>
+      
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <p className="mb-0">
+          <strong>Fee:</strong> ₹{appointment.fees}
+        </p>
+        <div>
+          {appointment.isPaid ? (
+            <Badge bg="success" className="me-2">Paid</Badge>
+          ) : (
+            <Badge bg="warning" className="me-2">Unpaid</Badge>
+          )}
+          {appointment.paymentMethod && (
+            <Badge bg="info">
+              <FaCreditCard className="me-1" /> 
+              {getPaymentMethodLabel(appointment.paymentMethod)}
+            </Badge>
+          )}
+        </div>
+      </div>
 
       <Button as={Link} to={`/appointments/${appointment._id}`} variant="primary" size="sm">
         View Details
