@@ -5,8 +5,8 @@ This guide will help you set up and run the Doctor Appointment system on your lo
 ## Prerequisites
 
 - Node.js (v14 or higher)
-- MongoDB (installed and running locally)
 - NPM (Node Package Manager)
+- Internet connection (for MongoDB Atlas cloud database)
 
 ## Project Structure
 
@@ -26,26 +26,14 @@ The project is divided into two main directories:
    npm install
    ```
 
-3. The `.env` file is already included in the repository with the following content:
-   ```
-   PORT=5000
-   MONGO_URI=mongodb://localhost:27017/doctor-appointment
-   JWT_SECRET=your_jwt_secret_key
-   ```
+3. The application is configured to use MongoDB Atlas (cloud database). The database is already populated with sample data including doctor profiles and user accounts.
 
-4. Seed the database with sample data (IMPORTANT):
-   ```
-   node seed.js
-   ```
-   
-   **Note:** This step is crucial as it populates your database with sample doctor profiles and user accounts. Without running the seed script, you'll have an empty database with no doctors to browse or book appointments with.
-
-5. Start the backend server:
+4. Start the backend server:
    ```
    npm run dev
    ```
 
-6. The backend server should now be running on http://localhost:5000
+5. The backend server should now be running on http://localhost:5000
 
 ## Setting Up the Frontend
 
@@ -78,14 +66,8 @@ The project is divided into two main directories:
 
 ## Important Notes
 
-1. Make sure MongoDB is running on your system before starting the backend.
-2. If you encounter any issues with the login process, you can reset user passwords by running:
-   ```
-   cd backend
-   node resetPassword.js       # For patient account
-   node resetDoctorPassword.js # For doctor account
-   ```
-
+1. The application uses MongoDB Atlas (cloud database) - no local MongoDB installation required.
+2. The database is already populated with sample data and user accounts.
 3. The backend and frontend need to run simultaneously for the application to work properly.
 
 ## Application Features
@@ -98,9 +80,9 @@ The project is divided into two main directories:
 
 ## Troubleshooting
 
-1. If MongoDB fails to connect, ensure the MongoDB service is running on your system.
+1. If the database connection fails, check your internet connection as the app uses MongoDB Atlas (cloud database).
 2. If you see error messages about ports being in use, ensure no other application is using ports 3000 or 5000.
-3. If you encounter login issues, verify the credentials or use the password reset scripts mentioned above.
+3. If you encounter login issues, use the default credentials provided in the user accounts section.
 
 ## Uploading to GitHub
 
@@ -112,7 +94,7 @@ To upload this project to GitHub:
    - Log files
    - Other unnecessary system files
    
-   Note: Environment files (`.env`) and the database seed file (`seed.js`) are intentionally included in the repository for easier setup.
+   Note: Environment files (`.env`) are configured for the cloud database connection.
 
 2. Initialize Git, add files, and commit:
    ```
@@ -132,4 +114,4 @@ To upload this project to GitHub:
 
 5. All necessary project files will be uploaded while `node_modules` and other excluded files will be ignored.
 
-6. Anyone cloning your repository will need to run `npm install` in both the backend and frontend directories to install dependencies, but they won't need to create `.env` files as they are included in the repository. 
+6. Anyone cloning your repository will need to run `npm install` in both the backend and frontend directories to install dependencies. The database is hosted on MongoDB Atlas and is already populated with data.

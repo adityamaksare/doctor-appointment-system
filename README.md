@@ -15,7 +15,7 @@ A full-stack web application for managing doctor appointments built with the MER
 
 - **Frontend**: React.js, Bootstrap, Context API for state management
 - **Backend**: Node.js, Express.js
-- **Database**: MongoDB
+- **Database**: MongoDB Atlas (Cloud Database)
 - **Authentication**: JWT (JSON Web Tokens)
 
 ## Project Structure
