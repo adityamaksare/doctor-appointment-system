@@ -1,0 +1,25 @@
+services:
+  # Full-stack Web Service (Frontend + Backend)
+  - type: web
+    name: doctor-appointment-system
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run install-all && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false  # You'll need to add this manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 30d
+    healthCheckPath: /api
+    disk:
+      name: doctor-appointment-disk
+      mountPath: /opt/render/project/data
+      sizeGB: 1
